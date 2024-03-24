@@ -1,0 +1,57 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main view </title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+</head>
+
+<body class="mx-4 my-5 bg-gray-300 select-none">
+    <header class="">
+        <div class="p-2 py-4 text-xl text-white bg-gray-600 shadow-sm ">
+            <nav class="flex items-center justify-end gap-2 gap-4 mr-10 capitalize text-md sm:h-10 text-bold md:mr-20">
+                <div class="">
+                    <a class="hover:text-green-400" href="{% url 'index' %}">Home</a>
+                </div>  
+                {% if user.is_authenticated %}
+                    <div class="">
+                        <a class="hover:text-green-400" href="{% url 'userPanel' %}">Dashboard</a>
+                    </div>  
+                    <div class="">
+                        <a class="hover:text-green-400" href="{% url 'logout' %}">logout</a>
+                    </div>
+                {% endif %}
+                <div class="">
+                    <a class="hover:text-green-400" href="{% url 'signup_view' %} ">signup</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    {% if request.user.is_authenticated %}
+        <div class="grid grid-cols-12">
+            <div class="col-span-9 px-5 mt-10 ">
+                <div class="text-lg">
+                    <h2 class="px-4 py-10 bg- md:text-2xl"><b class="text-lg">
+                    {{ request.user }}
+                    </b> you are currently signed-in </h2>
+                </div>
+            </div>
+        </div>
+        <div class="px-10 mt-4 text-2xl font-semibold text-center md:text-4xl">
+                We are sorry something went wrong
+            </div>
+    {% else %}
+    <div class='mt-20 text-lg text-center'>
+        Welcome to swiftxbt<br> Amazing packages awaits you when you choose to signup with us
+    </div>
+    <div class='flex justify-center mt-20'>
+        <a href="/signup_view"> 
+            <button class="p-2 px-10 py-4 text-xl bg-blue-300 shadow-lg shadow-xl hover:shadow-2xl hover:bg-blue-400 hover:text-white">
+                Create an account with this Referral link
+            </button>
+        </a>
+    </div>
+    {% endif %}
+
+</body>

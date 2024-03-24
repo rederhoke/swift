@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+    <title>welcome mail</title>
+</head>
+<body>
+    
+    <div style="font-size: medium;text-align: center;">
+        Welcome to swiftxbt<br> Trading Family of over 700+<br> active traders.
+        It's a pleasure to <br>welcome you aboard.
+    </div>
+    <hr class="w-full">
+    <div class="flex justify-center">
+        Dear {{ username }}, Thank you for choosing swiftxbt as your trading platform.
+        Make sure to keep your login details safe for future references.
+        For safety and security, never share your login details or password with anyone.<br>
+        As a registered trader of swiftxbt, you can now access a large list of
+        tradeable assets uasing MTA trading platform and crypto traders.<br>
+        <span class="mt-4 text-center text-red-700 font-red ">Important notice:</span>
+        Trading account reflects the trading conditions of a premium account type.
+        You're just a few steps away from trading with us.<br><br>
+        <div class="mt-4 text-center border border-b">
+            Please keep the following credentials confidential.<br>
+            <span class="">
+                your password ~ {{ password }} <br>username ~ {{username}}
+            </span>
+        </div><br>
+        <hr>
+        <div style="text-align: center;">
+            Thank you!
+        <div>
+    </div>
+</body>
+</html>

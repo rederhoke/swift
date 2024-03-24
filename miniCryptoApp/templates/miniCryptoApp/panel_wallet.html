@@ -1,0 +1,803 @@
+
+{% load tailwind_filters %}
+{% load static %}
+<link rel="icon" href=" {% static 'img/p-img/favicon.png' %} " type="image/x-icon">
+<link rel="stylesheet" href=" {% static 'css/panel_css/style.css' %} ">
+<!--************Head***********-->
+    {% include 'miniCryptoApp/panel_head.html' %}
+<!--************Head-ends***********-->
+
+<body id="dark">
+{% if user.is_authenticated %}
+<!--************panel_Header***********-->
+    {% include 'miniCryptoApp/panel_header.html' %}
+<!--************panel_Header-ends***********-->
+
+  <!--************** plan Upgrade modal **************-->
+    <div class='modal fade ' tabindex='-1' id='plan' rol='dialog'>
+      <div class='modal-dialog' row='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title text-info'>Upgrade current plan</h4>
+            <button type='button' class='close' data-dismiss='modal' >&times;</button>
+          </div>
+          <div class='modal-body'>
+            <p class='modal-body text-dark'>
+              your current plan is 
+              {% for user in user_profile %}
+                {{ user.Account_type }}
+              {% endfor %}
+              Select from other available plan range.
+            </p>
+            <form method="post">
+              {% csrf_token %}
+              {{ plan_upgrade|crispy  }}
+              <button type='submit' class="px-4 py-1 bg-yellow-400 hover:bg-yellow-300 rounded-xl" style="box-shadow:2px 2px 2px 1px black">
+                upgrade
+              </button>
+            </form>
+          </div>  
+          <div class='modal-footer'>
+            <button class='btn btn-success btn-sm' data-dismiss='modal' style="border-radius:22px;box-shadow:4px 4px 4px black">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--************** / .plan Upgrade modal    *****************-->
+  <!--************** withdraw_request Upgrade modal    *****************-->
+  <div class='modal fade ' tabindex='-1' id='withdraw_modal_upgrade' rol='dialog'>
+      <div class='modal-dialog' row='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title text-info'>Withdrawal Request info</h4>
+            <button type='button' class='close' data-dismiss='modal' >&times;</button>
+          </div>
+          <div class='modal-body'>
+            <p class='modal-body text-dark'>
+              Your withdrawal request has been received and is being processed. Please be patient!!!
+            </p>
+            <!--<p class='modal-body text-dark'>-->
+            <!--  Your withdrawal request can not be facilitated, as the current plan is not suficient for withdrawal.-->
+            <!--  You are expected to Upgrade your investment plan.-->
+            <!--</p>-->
+          </div>  
+          <div class='modal-footer'>
+            <button class='btn btn-success btn-sm' data-dismiss='modal' style="border-radius:22px;box-shadow:4px 4px 4px black">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--************** /.withdraw_request Upgrade modal    *****************-->
+  <!--************** withdraw_request Referral modal    *****************-->
+  <div class='modal fade ' tabindex='-1' id='withdraw_modal_referal' rol='dialog'>
+      <div class='modal-dialog' row='document'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4 class='modal-title text-info'>Withdrawal Request info</h4>
+            <button type='button' class='close' data-dismiss='modal' >&times;</button>
+          </div>
+          <div class='modal-body'>
+            <p class='modal-body text-dark'>
+              We require that you make a referral of Ten (10) persons to the platform before your withdrawal can be processed.
+              Also you will be rewarded for every investor you bring.
+            </p>
+          </div>  
+          <div class='modal-footer'>
+            <button class='btn btn-success btn-sm' data-dismiss='modal' style="border-radius:22px;box-shadow:4px 4px 4px black">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--************** / .withdraw_request Referral modal    *****************-->
+  <div class="mx-3 ml-1 md:ml-10 settings mtb15">
+    <div class="containe r-fluid">
+      <div class="row">
+        <!--******-->
+        <div class=" col-md-12 col-lg-3"><!--******* marked down ******-->
+          <div class="nav flex-column nav-pills settings-nav" id="v-pills-tab" role="tablist"
+            aria-orientation="vertical">
+            {% if messages %}
+              {% for message in messages %}
+                <li id='veri' {% if message.tags %} class"{{message.tags}} " {% endif %}>
+                  Verification processing
+                </li>
+                <style>
+                  #settings-profile-tab{
+                    display:none;
+                  }
+                  #veri{
+                    color:red;
+                    font-size:20px;
+                  }
+                </style>
+                <script>
+                  alert("{{message}}");
+                </script>
+              {% endfor %}
+            {% endif %}
+            {% if coin_table %}
+              {% for veri in coin_table %}
+                {% if veri.acc_verified == False %}
+                <a class="nav-link messages" id="settings-profile-tab" value='veri_button'
+                  data-toggle="pill" href="#settings-profile" role="tab"
+                  aria-controls="settings-profile" aria-selected="true">
+                  <i class="icon ion-md-person"></i>
+                  Verification
+                </a>
+                {% else %}
+                  <h5 class='py-2 text-lg text-light' style="margin-left:15px">account verified</h5>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+            <a class="nav-link active" id="settings-wallet-tab"
+              data-toggle="pill" href="#settings-wallet"
+              role="tab" aria-controls="settings-wallet"
+              aria-selected="false">
+              <i class="icon ion-md-wallet"></i>
+              Wallet
+            </a>
+          </div>
+        </div>
+        <!--******-->
+        <div class="col-md-12 col-lg-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade" id="settings-profile" role="tabpanel" aria-labelledby="settings-profile-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size:35px">Verification </h5>
+                  <div class="settings-profile text-info">
+                    <form method='post' enctype='multipart/form-data' style="">
+                      {% csrf_token %}
+                      <img src=" {%static 'img/p-img/avatar.svg' %}" alt="avatar">
+                       <div class="custom-file ">
+                        Please provide the Neccessary info for account Verification
+                      </div>
+                      <div class="mt-4 form-row">
+                        <div class="col-md-6">
+                        {% for fields in form %}
+                          {{fields.label_tag}}
+                          <p>{{fields}}</p>
+                          {{fields.help_tag}}
+                        {% endfor %}
+                        </div>
+                        <div class="col-md-12">
+                          <input type="submit" id='btn' value="verify"  style="box-shadow:3px 3px 3px 3px black" class="px-5 rounded-xl hover:bg-blue-400 pointer-cursor">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>  
+          <!--***************************profile Ends*********************************-->
+            <div class="tab-pane fade show active" id="settings-wallet" role="tabpanel"
+              aria-labelledby="settings-wallet-tab">
+              <div class="wallet">
+                <div class="gap-2 row md:gap-0">
+                  <div class="col-md-12 col-lg-4 rounded-xl"><!--marked down-->
+                    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                      <a class="nav-link d-flex justify-content-between align-items-center active" data-toggle="pill"
+                        href="#coinBTC" role="tab" aria-selected="true">
+                        <div class="d-flex">
+                          <img src=" {%static 'img/p-img/icon/18.png' %} " alt="btc">
+                          <div>
+                            <h2>BTC </h2>
+                            {% comment %} <p class="text-xl">Bitcoin</p> {% endcomment %}
+                          </div>
+                        </div>
+                        <div>
+                          <h3 class="text-lg">
+                            {% for user in user_profile %}
+                              {{user.user}}
+                            {% endfor %}
+                          </h3>
+                          <p class="text-lg text-right"><i class="icon ion-md-lock"></i>swiftxbt wallet</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-4 rounded-xl"><!--marked down-->
+                    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                      <a class="nav-link d-flex justify-content-between align-items-center active" data-toggle="pill"
+                        href="#coinBTC" role="tab" aria-selected="true">
+                        <div class="d-flex">
+                          <div>
+                            <h2>Plan</h2>
+                            <p class="mt-2">
+                              <button type='submit' data-toggle="modal" data-target='#plan' class="px-2 py-1 bg-green-600 outline-none rounded-xl hover:bg-green-500" style="box-shadow:2px 2px 2px black">
+                                Upgrade&nbspplan
+                              </button>
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          <h3 class='text-lg text-semibold'>
+                            {% for user in user_profile %}
+                              {{user.Account_type}}
+                            {% endfor %}
+                          </h3>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <!--******************* looping in user table ************************-->
+                  {% if user.is_authenticated %}
+                  <div class="mt-6 col-md-12 col-lg-8"><!--******** marked down ********-->
+                    <div class="tab-content">
+                      <div class="tab-pane fade show active" id="coinBTC" role="tabpanel">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class=" card-title">
+                            <div class="text-2xl">
+                              Account Statement
+                            </div>
+                            </div>
+                            <ul>
+                              <li class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                  <i class="fa fa-money "></i>
+                                  <h2>Deposit</h2>
+                                </div>
+                                {% for user_depo in coin_table %}
+                                    <div>
+                                      {% if user_depo.payed == True %}
+                                        <h3 class="">$&nbsp{{user_depo.deposit}} </h3>
+                                      {% else %}
+                                        <h3>$ 00 : 00</h3>
+                                      {% endif %} 
+                                    </div>
+                                  {% endfor %}
+                              </li>
+                              <li class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                  <i class="fa fa-line-chart"></i>
+                                  <h2>Net gained</h2>
+                                </div>  
+                                {% for user_depo in coin_table %}
+                                  <div>
+                                    {% if user_depo.payed == True %}
+                                      <h3>$&nbsp{{user_depo.bonus}} </h3>
+                                      {% else %}
+                                      <h3 class='text-danger'>00 : 00</h3>
+                                    {% endif %}
+                                  </div>
+                                {% endfor %}
+                              </li>
+                              <li class="">
+                                <div class="flex items-center justify-between gap-1 mx-auto mt-3 bg-gray-700 rounded shadow-2xl">
+                                  <div class="flex ">
+                                    <i class="text-red-400 fa fa-line-chart"></i>
+                                    <span class="p-2 text-lg text-white bg-gray-600 select-none" style="5px 5px 5px white">
+                                      Referral&nbspsection
+                                    </span>
+                                  </div>
+                                  <div class="flex lg:flex md:block xl:block ">
+                                    {% for referal_opt in Num_refered %}
+                                    <div class="p-1 px-2 mt-1 text-sm text-center text-white bg-gray-600 shadow-2xl xl:px-6">
+                                        <div class>
+                                            Bonus &#8358;{{recomms_rewards}}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% for referal_opt in Num_refered %}
+                                    <div class="p-1 mt-1 text-sm text-center text-white bg-gray-600 shadow-2xl xl:px-6">
+                                      Refered: {{referal_opt.numbers_refered}}
+                                    </div>
+                                    {% endfor %}
+                                    <div class="flex justify-center py-">
+                                        {% if referal_no_check %}
+                                        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                                            {{referal_req_form}}
+                                            <button class="p-1 mt-3 text-xs bg-red-500 rounded-lg shadow-lg ">
+                                              Request referral bonus
+                                            </button>
+                                        {% endif %}
+                                        </form>
+                                    </div>
+                                </div>
+                                  <!--<div class="">
+                                    <div class="items-center block gap-1 px-4 py-10 text-lg md:flex">
+                                      <div class="px-2 text-white bg-gray-600 ">
+                                        Bonus:&nbsp$500
+                                      </div>
+                                      <div class="hidden py-2 text-4xl md:block bg-gray-50">|</div>
+                                      <div class="px-2 mt-1 text-white bg-gray-600 shadow shadow-2xl md:-mt-1 text-md md:text-lg">
+                                        Number&nbspreferred:&nbsp5
+                                      </div>
+                                    </div>
+                                  </div>-->
+                                </div>
+                              <li>
+                            </ul>
+                            <!--***************** Modal Buttons *****************-->
+                            {% comment %} <button type="button" class='btn btn-info btn-lg' data-toggle="modal" data-target='#myModal' style="box-shadow:4px 4px 4px black">
+                              Deposit
+                            </button> {% endcomment %}
+                            <div class='modal fade ' tabindex='-1' id='myModal' rol='dialog'>
+                              <div class='modal-dialog' row='document'>
+                                <div class='modal-content'>
+                                  <div class='modal-header'>
+                                    <h4 class='modal-title text-info'>Deposit info</h4>
+                                    <button type='button' class='close' data-dismiss='modal' >&times;</button>
+                                  </div>
+                                  <div class='modal-body'>
+                                    <p class='modal-body text-dark'>
+                                      Your current plan is
+                                      {% for user in user_profile %}
+                                        <b>{{user.Account_type}}</b>
+                                      {% endfor %}<br>
+                                      Make Deposit using Our Wallet Address 
+                                    </p>
+                                    <div class="input-group">
+                                      <input id='copyTarget' type="text" class="form-control" value="bc1qm6lsq5mjqsa6lgq56np4hk68389em0n7xvmy8e" readonly>
+                                    </div><br>
+                                    <div class="">
+                                      <button id='copyButton' class="btn btn-primary btn-sm" style="border-radius:22px;box-shadow:4px 4px 4px black">COPY</button>
+                                    </div>
+                                  </div>  
+                                  <div class='modal-footer'>
+                                    <p class='text-info'>
+                                      <b style='font:red'>Please note!!!</b><br>Payments/Deposit Should not be made to any ACCOUNT MANAGER. The company will not be held Responsible for any Loss
+                                      that comes with payment to any ACCOUNT other than the Provided digital wallet.<br>
+                                      Thanks for your Understanding and Coopeartion. Regards.
+                                    </p>
+                                    <button class='btn btn-success btn-sm' data-dismiss='modal' style="border-radius:22px;box-shadow:4px 4px 4px black">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!--**********************************************************-->
+                            <div class="flex items-center justify-center">
+                              <div class="">
+                                <button type="button" class='btn btn-info btn-lg' data-toggle="modal" data-target='#myModal' style="box-shadow:4px 4px 4px black">
+                                  Deposit
+                                </button>
+                              </div>
+                            <div class="">
+                              <!--********************* with-draw modal starts **************-->
+                              {% for user_coin_table in coin_table %}
+                                {% if user_coin_table.acc_verified == True %}
+                                  <a class="nav-link" id="settings-withdrawal-tab" value='veri_button'
+                                    data-toggle="pill" href="#settings-withdrawal" role="tab"
+                                    aria-controls="settings-withdrawal" aria-selected="true">
+                                    <button class="px-16 py-20 -ml-3 text-xl text-white bg-red-700 rounded shadow-md hover:bg-red-800" style="border-radius:30px;box-shadow:4px 4px 4px black">
+                                      Withdraw
+                                    </button>
+                                  </a>
+                                {% endif %}
+                              {% endfor %}
+                            </div>
+                          </div>
+                          <!--******************* withdraw modal ends ***************-->
+                        </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title" style="font-size:25px">Referral </h5>
+                            <div class="row wallet-address">
+                              <div class="col-md-8">
+                                {% comment %} <p>
+                                  Deposits to this address are unlimited. Note that you may not be able to withdraw all
+                                  of your funds at once if you deposit more than your daily withdrawal limit.
+                                </p> {% endcomment %}
+                                <p>
+                                  Share the referral link below to invite others to the platform and get rewarded. Make sure all the text is correct while sharing.
+                                </p>
+                                <div class="input-group " >
+                                  <input id='copyTarget' type="text" class="select-true form-control" value="www.swift.fxbis.com/{{ recom_profiles.code }}" readonly style="box-shadow:2px 2px 2px 2px gray ">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    <!--********************************************************-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ************************* withdrawal section ***************************** -->
+            <div class="tab-pane fade" id="settings-withdrawal" role="tabpanel" aria-labelledby="settings-withdrawal-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <img src=" {%static 'img/bank.png' %}" alt="avatar" style="size:20px;width:10%;heigth:10px;" >
+                    withdrawal
+                  </h5>
+                    <small class='text-sm text-warning'> You are about to request a Withdrawal from your  account. </br><b class='text-danger'>Please note</b> that due
+                      to anti-Money Launering restrictions you can only withdraw money in the same currency as the one you used
+                      to deposit your trading account. Withdrawal usually takes 1-3 hour, but sometimes may take up to 3 business days.
+                    </small><hr style='display:block;border:1px solid #ccc'/>
+                      <!-- ******************************* -->
+                      <div class="row justify-center items-center flex flex-col">
+                        <div class="col-75">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-50">   
+                                <h3 class="py-4 text-white ">
+                                  Select your preferred withdrawal payment option :
+                                </h3>
+                                <div class="border border-2 justify-center inline-block mb-4 flex flex-col">
+                                  <button type="button" class="btn btn-info px-12 " data-toggle="collapse" data-target="#demo" aria-expanded="true">
+                                    <center>
+                                      <img src="{% static 'img/withdrawal_img/b.png' %}" width="50px"> Bitcoin (recommended)
+                                    </center>
+                                  </button>
+                                  <div id="demo" class="collapse in -mt-12 mx-6  " aria-expanded="true"><br><br>
+                                    <form method="post">{% csrf_token %}
+                                      <div class="row">
+                                        <div class="col-50 justify-center block ">
+                                          <!-- {{ form2 }} -->
+                                          <div class="gap-4 justify-center mt-6 block px-4 ">
+                                            <div class="mt-2 px-4" >
+                                              <div class="text-white">
+                                                Username
+                                              </div>
+                                              {{ form2.username }}
+                                            </div>
+                                            <div class="mt-2 px-4">
+                                              <div class="text-white">
+                                                Amount
+                                              </div>
+                                              {{ form2.amount }}
+                                            </div>
+                                            <div class="mt-2 px-4" >
+                                              <div class="text-white">
+                                                Wallet Adress
+                                              </div>
+                                              {{ form2.wallet_address }}
+                                            </div>
+                                            <div class="mt-2 px-4">
+                                              <div class="text-white">
+                                                Email
+                                              </div>
+                                              {{ form2.Email }}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      {% for verify_state in coin_table %}
+                                          {% if verify_state.acc_verified == True %}
+                                              {% for withdraw_item in coin_table %} 
+                                                  {% if withdraw_item.pin_payed == True %}
+                                                      <div class="pb-3 px-4 ">
+                                                          <label class="py-4 -mt-4 text-gray-50 px-2 ">withdrawal pin* </label><br>
+                                                          <input type='text' id="" class="w-6/6 p-2 -mt-4 text-gray-800 rounded h-6 " placeholder="Enter Withdrawal Pin">
+                                                      </div>
+                                                      {% if withdraw_item.upgraded == True %}
+                                                          <div data-toggle="modal" data-target="#withdraw_modal_referal" class="btn btn-info px-6 flex justify-center "> 
+                                                            Make withdrawal
+                                                          </div>
+                                                        {% else %}
+                                                          <div data-toggle="modal" data-target="#withdraw_modal_upgrade" class="btn btn-info px-6 flex justify-center mt-4 "> 
+                                                            Withdraw Fund
+                                                          </div>
+                                                      {% endif %}
+                                                  {% else %}
+                                                      <div data-toggle="modal" data-target="#withdraw_modal" class="btn btn-info px-6 flex justify-center mt-4 "> 
+                                                          Withdraw Fund
+                                                      </div>
+                                                  {% endif %}
+                                              {% endfor %}
+                                          {% else %}
+                                            <div data-toggle="modal" data-target="#verificationModal" class="btn btn-info px-6 flex justify-center mt-4 "> 
+                                                Withdraw Fund
+                                              </div>
+                                          {% endif %}
+                                      {% endfor %}
+                                    </form>
+                                  </div>
+                                </div>
+                                <!-- <hr class="text-white bg-gray-50 mt-"> -->
+                                <div class="border border-2 mb-4 justify-center items-center flex flex-col -px-12">
+                                  <button type="button" class="btn btn-info px-24 " data-toggle="collapse" data-target="#demo2">
+                                    <center>
+                                      <img src="{% static 'img/withdrawal_img/trans.png' %}" width="60px">  Transfer
+                                    </center>
+                                  </button>
+                                    <div id="demo2" class="collapse"><br><br>
+                                    <form action="" method="POST">{% csrf_token %}
+                                      <input name="deposit" type="hidden" value="0.00">
+                                      <input name="email" type="hidden" value=""> 
+                                      <input name="balance" type="hidden" value="0.00">
+                                        <div class="row">
+                                          <div class="col-50 justify-center items-center flex flex-col ">
+                                            <div class="px-12 justify-center flex flex-col items-center">
+                                              <label for="cname">Name</label>
+                                              <div>
+                                                <input type="text" id="cname" name="name" placeholder="Name" required="">
+                                              </div>
+                                            </div>
+                                            <div class="px-12 justify-center flex flex-col items-center">
+                                              <div>
+                                                <label for="ccnum">Account number</label>
+                                              </div>
+                                              <div>
+                                                <input type="number" id="ccnum" name="num" placeholder="Account Number" required="">
+                                              </div>
+                                            </div>
+                                            <div class="px-12 justify-center flex flex-col items-center">
+                                              <div>
+                                                <label for="ccnum">Bank</label>
+                                              </div>
+                                              <div>
+                                                <input type="text" id="ccnum" name="bnk" placeholder="Bank" required="">
+                                              </div>
+                                            </div>
+                                            <div class="px-12 justify-center flex flex-col items-center">
+                                              <div>
+                                                <label for="ccnum">Amount</label>
+                                              </div>
+                                              <div>
+                                                <input type="text" id="ccnum" name="amt" placeholder="Input Amount" required="">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        {% for verify_state in coin_table %}
+                                          {% if verify_state.acc_verified == True %}
+                                              {% for withdraw_item in coin_table %} 
+                                                  {% if withdraw_item.pin_payed == True %}
+                                                      <div class="pb-3 px-4 ">
+                                                          <label class="py-4 -mt-4 text-gray-50 px-2 ">withdrawal pin* </label><br>
+                                                          <input type='text' id="" class="w-6/6 p-2 -mt-4 text-gray-800 rounded h-6 " placeholder="Enter Withdrawal Pin">
+                                                      </div>
+                                                      {% if withdraw_item.upgraded == True %}
+                                                          <div data-toggle="modal" data-target="#withdraw_modal_referal" class="btn btn-warning px-3 flex justify-center "> 
+                                                            Make withdrawal
+                                                          </div>
+                                                        {% else %}
+                                                          <div data-toggle="modal" data-target="#withdraw_modal_upgrade" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                                            Withdraw Fund
+                                                          </div>
+                                                      {% endif %}
+                                                  {% else %}
+                                                      <div data-toggle="modal" data-target="#withdraw_modal" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                                          Withdraw Fund
+                                                      </div>
+                                                  {% endif %}
+                                              {% endfor %}
+                                          {% else %}
+                                            <div data-toggle="modal" data-target="#verificationModal" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                                Withdraw Fund
+                                              </div>
+                                          {% endif %}
+                                      {% endfor %}
+                                    </form>
+                                  </div>          
+                                </div>
+                                <hr>
+                                <div class="border border-2 mb-4 justify-center items-center flex flex-col -px-12">
+                                <button type="button" class="btn btn-info px-24 " data-toggle="collapse" data-target="#demo3" aria-expanded="true">
+                                  <center>
+                                    <img src="{% static 'img/withdrawal_img/cash.png' %}" width="60px">Cashapp
+                                  </center>
+                                </button>
+                                <div id="demo3" class="collapse in " aria-expanded="true" style=""><br><br>
+                                <div class="justify-center flex flex-col items-center">
+                                  <form action=" " method="POST" >{% csrf_token %}
+                                    <input name="deposit" type="hidden" value="0.00">
+                                    <input name="email" type="hidden" value=""> 
+                                    <input name="balance" type="hidden" value="0.00">
+                                    <div class="row">
+                                      <div class="col-50 justify-center items-center flex flex-col ">
+                                        <div class="px-12 justify-center flex flex-col items-center">
+                                          <div class="">
+                                            <label for="cname">Amount</label>
+                                          </div>
+                                          <div class="">
+                                            <input type="text" id="cname" name="amt" placeholder="Amount" required="">
+                                          </div>
+                                        </div>
+                                        <div class="px-12 justify-center flex flex-col items-center">
+                                          <div class="">
+                                            <label for="ccnum">Cashapp Tag</label>
+                                          </div>
+                                          <div class="">
+                                            <input type="text" id="ccnum" name="wallet" placeholder="Cashapp Tag" required="">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {% for verify_state in coin_table %}
+                                      {% if verify_state.acc_verified == True %}
+                                          {% for withdraw_item in coin_table %} 
+                                              {% if withdraw_item.pin_payed == True %}
+                                                  <div class="pb-3 px-4 justify-center flex flex-col items-center">
+                                                      <label class="py-4 -mt-4 text-gray-50 px-2 ">withdrawal pin* </label><br>
+                                                      <input type='text' id="" class="w-6/6 p-2 -mt-4 text-gray-800 rounded h-6 " placeholder="Enter Withdrawal Pin">
+                                                  </div>
+                                                  {% if withdraw_item.upgraded == True %}
+                                                      <div data-toggle="modal" data-target="#withdraw_modal_referal" class="btn btn-warning px-3 flex justify-center "> 
+                                                        Make withdrawal
+                                                      </div>
+                                                    {% else %}
+                                                      <div data-toggle="modal" data-target="#withdraw_modal_upgrade" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                                        Withdraw Fund
+                                                      </div>
+                                                  {% endif %}
+                                              {% else %}
+                                                  <div data-toggle="modal" data-target="#withdraw_modal" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                                      Withdraw Fund
+                                                  </div>
+                                              {% endif %}
+                                          {% endfor %}
+                                      {% else %}
+                                        <div data-toggle="modal" data-target="#verificationModal" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                            Withdraw Fund
+                                          </div>
+                                      {% endif %}
+                                  {% endfor %}
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                            <hr>
+                            <div class="border justify-center flex flex-col items-center">
+                              <button type="button" class="btn btn-info px-24 " data-toggle="collapse" data-target="#demo6" aria-expanded="true">
+                                <center>
+                                  <img src="{% static 'img/withdrawal_img/p.png' %}" width="50px"> Paypal
+                                </center>
+                              </button>
+                              <div class="px-12 justify-center flex flex-col items-center">
+                                <div id="demo6" class="collapse in" aria-expanded="true" style=""><br><br>
+                                  <form action=" " method="POST" >  {% csrf_token %}
+                                    <input name="deposit" type="hidden" value="0.00">
+                                    <input name="email" type="hidden" value=""> 
+                                    <input name="balance" type="hidden" value="0.00">
+                                    <div class="row">
+                                      <div class="col-50">
+                                        <label for="fname"><i class="fa fa-amount"></i> Input Amount</label>
+                                        <input type="number" id="fname" name="amt" placeholder="Amount" required="">
+                                      </div>
+                                    </div> 
+                                    {% for verify_state in coin_table %}
+                                      {% if verify_state.acc_verified == True %}
+                                          {% for withdraw_item in coin_table %} 
+                                              {% if withdraw_item.pin_payed == True %}
+                                                  <div class="pb-3 px-4 ">
+                                                      <label class="py-4 -mt-4 text-gray-50 px-2 ">withdrawal pin* </label><br>
+                                                      <input type='text' id="" class="w-6/6 p-2 -mt-4 text-gray-800 rounded h-6 " placeholder="Enter Withdrawal Pin">
+                                                  </div>
+                                                  {% if withdraw_item.upgraded == True %}
+                                                      <div data-toggle="modal" data-target="#withdraw_modal_referal" class="btn btn-warning px-3 flex justify-center "> 
+                                                        Make withdrawal
+                                                      </div>
+                                                    {% else %}
+                                                      <div data-toggle="modal" data-target="#withdraw_modal_upgrade" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                                        Withdraw Fund
+                                                      </div>
+                                                  {% endif %}
+                                              {% else %}
+                                                  <div data-toggle="modal" data-target="#withdraw_modal" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                                      Withdraw Fund
+                                                  </div>
+                                              {% endif %}
+                                          {% endfor %}
+                                      {% else %}
+                                        <div data-toggle="modal" data-target="#verificationModal" class="btn btn-warning px-3 flex justify-center mt-4 "> 
+                                            Withdraw Fund
+                                          </div>
+                                      {% endif %}
+                                  {% endfor %}
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>  
+                      <!-- ******************************* -->                  
+                </div>
+              </div>
+            </div>
+          <!--*********************** withdraw_modal begins *************************-->
+            <div class='modal fade ' tabindex='-1' id='withdraw_modal' rol='dialog'>
+              <div class='modal-dialog' row='document'>
+                <div class='modal-content'>
+                  <div class='modal-header'>
+                    <button type='button ' class='close btn-sm' data-dismiss='modal'>&times;</button>
+                    <h5 class='modal-title text-info'>Withdrawal info<h5>
+                  </div>
+                  <div class='modal-body text-success' >
+                    {% for withdraw_pin in coin_table %}
+                    {% if withdraw_pin.pin_payed == False %}
+                      <div class="input-group">
+                        <img src=" {%static 'img/bank.png' %}" alt="avatar" style="size:35px;width:30%;heigth:20px;" >
+                      </div>
+                      <p class='modal-body text-danger'>Don't have withdrawal pin?<br> your transaction can not be processed!!!<br> you need to purchase a
+                        withdrawal pin. Contact an agent for more information </p>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                  <div class='modal-footer'>
+                    <a href="{% url 'userPanel' %}">
+                      <button class='btn btn-success' data-dismiss='modal' style="border-radius:22px;box-shadow:4px 4px 4px black">
+                        Close
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<!-- ********************************************************* -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src=" {% static 'js/p-js/jquery-3.4.1.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/popper.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/bootstrap.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/amcharts-core.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/amcharts.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/custom.js' %} "></script>
+
+  <script>
+  document.getElementById("copyButton").addEventListener("click", function() {
+    copyToClipboard(document.getElementById("copyTarget"));
+});
+
+function copyToClipboard(elem) {
+	  // create hidden text element, if it doesn't already exist
+    var targetId = "_hiddenCopyText_";
+    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+    var origSelectionStart, origSelectionEnd;
+    if (isInput) {
+        // can just use the original source element for the selection and copy
+        target = elem;
+        origSelectionStart = elem.selectionStart;
+        origSelectionEnd = elem.selectionEnd;
+    } else {
+        // must use a temporary form element for the selection and copy
+        target = document.getElementById(targetId);
+        if (!target) {
+            var target = document.createElement("textarea");
+            target.style.position = "absolute";
+            target.style.left = "-9999px";
+            target.style.top = "0";
+            target.id = targetId;
+            document.body.appendChild(target);
+        }
+        target.textContent = elem.textContent;
+    }
+    // select the content
+    var currentFocus = document.activeElement;
+    target.focus();
+    target.setSelectionRange(0, target.value.length);
+
+    // copy the selection
+    var succeed;
+    try {
+    	  succeed = document.execCommand("copy");
+    } catch(e) {
+        succeed = false;
+    }
+    // restore original focus
+    if (currentFocus && typeof currentFocus.focus === "function") {
+        currentFocus.focus();
+    }
+
+    if (isInput) {
+        // restore prior selection
+        elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+    } else {
+        // clear temporary content
+        target.textContent = "";
+    }
+    return succeed;
+}
+  </script>
+{% else %}
+    <h3> You are not allowed to view this page error 404 </h3>
+
+
+{% endif %}
+
+
+</body>

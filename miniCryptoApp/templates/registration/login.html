@@ -1,0 +1,46 @@
+{% load tailwind_filters %}
+{% load static %}
+
+<!--************Head***********-->
+  {% include 'miniCryptoApp/panel_head.html' %}
+<!--************Head-ends***********-->
+<body id="dark">
+  <header class="dark-bb">
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href=" {% url 'index' %} ">
+        swiftxbt™
+      </a>
+  </header>
+
+  <div class="vh-100 d-flex justify-content-center" style="background-image: url({% static 'img/initial-bg.png' %})">
+    <div class="my-auto form-access" style="background-color:#111925" >
+      <form method='post' style="border:2px solid green" class="mt-10 ">
+        {% csrf_token %}
+        <span>Sign In to your Dashboard</span>
+        <div class="text-white">
+          <div class="text-center text-start">
+            <div class="">
+              {{ form|crispy }}
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+        <h2>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></h2>
+        <h2><a href="{% url 'password_reset' %}">Forgotten your password? </a></h2>
+      </form>
+    </div>
+  </div>
+
+  <script src=" {% static 'js/p-js/jquery-3.4.1.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/popper.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/bootstrap.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/amcharts-core.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/amcharts.min.js' %} "></script>
+  <script src=" {% static 'js/ p-js/custom.js' %} "></script>
+
+
+
+
+</body>
+
+</html>

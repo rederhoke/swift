@@ -1,0 +1,20 @@
+<!-- CTA Gradient-->
+<section class="section section-md bg-gradient-3 text-center text-sm-left">
+<div class="shell-wide">
+    <div class="range range-50 range-xs-center"> 
+    <div class="cell-xl-8">
+        <div class="box-cta box-cta-inline">
+        <div class="box-cta-inner">
+            <h3 class="box-cta-title">What are you waiting for?</h3>
+            <p><h6 >Join thousands of people who choose to trade with us, enjoying our Bitcoin trading assets.</h6></p>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="box-cta-inner "><a class="button button-default-outline bg-danger" href="{% url 'userPanel' %}" >start your transactions now </a></div>
+        {% else %}
+            <div class="box-cta-inner"><a class="button button-default-outline" href="{% url 'signup' %}" >start your transactions now </a></div>
+        {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+</section>

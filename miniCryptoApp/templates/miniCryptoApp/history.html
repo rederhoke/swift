@@ -1,0 +1,70 @@
+{% load static %}
+
+
+<div class="space-60"></div>
+<div class="team-area team wow fadeInDown">
+  <div class="col-12 text-center">
+    <div class="heading">
+      <h4>History of transactions</h4>
+      <hr style="width:8%;border:1px solid red">
+    </div>
+    <div class="space-30"></div>
+  </div>
+  <div class="container ">
+    <div class="row">
+      <div class="col-lg-6 bg-gradient-1 text-dark">
+        <div style="text-align:center">
+          <i class="fa fa-institution text-white " style="font-size:50px"></i>
+          <h4>latest Deposits</h4> 
+        </div>
+        <table class="table table-hover">
+          <thead style="font-size:14px;color:#fca">
+            <tr>
+              <th scope="col">Trader</th>
+              <th scope="col">Deposit</th>
+              <th scope="col">Bonus recieved</th>
+              <th scope="col">status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for depo in deposit_history %}
+            <tr>
+              <td> {{depo.username}} </td>
+              <td> {{depo.deposit}} </td>
+              <td> {{depo.bonus}} </td>
+              <td> deposit confirmed: {{depo.payed}} </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>        
+      </div>
+      <div class="col-lg-6 bg-success text-dark">        
+        <div style="text-align:center">
+        <i class="fa fa-credit-card text-white " style="font-size:50px"></i>
+          <h4>latest withdrawals</h4> 
+        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr style="font-size:14px;color:#afa">
+              <th scope="col">Trader</th>
+              <th scope="col">amount</th>
+              <th scope="col">withdrawal date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for history in latest %}
+            <tr>
+              <td>{{history.username}}</td>
+              <td>$ {{history.amount}} </td>
+              <td> {{history.withdraw_date|date }} </td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="space-60"></div>

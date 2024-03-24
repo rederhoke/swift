@@ -1,0 +1,206 @@
+{% load static %}
+    
+<section class="text-center bg-white section section-md" id="pricing">
+  <div class="shell shell-wide">
+      <h3 class='text-primary'>Our Pricing </h3>
+      <div class="divider divider-default"></div>
+      <div class="range range-md range-50 range-xs-center">
+      <!-- Pricing Box XL-->
+      <div class="cell-sm-6 cell-lg-3">
+          <div class="pricing-box pricing-box-xl pricing-box-novi">
+          <div class="pricing-box-header">
+              <h4>Basic</h4>
+          </div>
+          <div class="pricing-box-price">
+            <div class="heading-2"><sup>$</sup>300 +</div>
+          {% if user.is_authenticated %}
+            </div><a class="button button-sm button-primary" href="{% url 'userPanel' %}">Get plan</a>
+            {% else %}
+            </div><a class="button button-sm button-primary" href="{% url 'signup' %}">Get plan</a>
+          {% endif %}
+          <div class="pricing-box-body">
+              <ul class="pricing-box-list">
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-line-chart text-primary "></span></div>
+                  <div class="unit-body"><span>5% Deposit Bonus</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-bomb text-danger"></span></div>
+                  <div class="unit-body"><span>No Risk Free Trade</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-suitcase text-primary"></span></div>
+                  <div class="unit-body"><span>Junior Brokers</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-times text-danger"></span></div>
+                  <div class="unit-body"><span>24/7 Support</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-times text-danger"></span></div>
+                  <div class="unit-body"><span>Instant Widthdrawal</span></div>
+                  </div>
+              </li>
+              </ul>
+          </div>
+          </div>
+      </div>
+      <!-- Pricing Box XL-->
+      <div class="cell-sm-6 cell-lg-3">
+          <div class="pricing-box pricing-box-xl pricing-box-novi">
+          <div class="pricing-box-header">
+              <h4>Standard</h4>
+          </div>
+          <div class="pricing-box-price">
+              <div class="heading-2"><sup>$</sup>1000 +</div>
+            {% if user.is_authenticated %}
+                </div><a class="button button-sm button-primary" href="{% url 'userPanel' %}">Get plan</a>
+            {% else %}
+                </div><a class="button button-sm button-primary" href="{% url 'signup' %}">Get plan</a>
+            {% endif %}
+          <div class="pricing-box-body">
+              <ul class="pricing-box-list">
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-line-chart text-primary"></span></div>
+                  <div class="unit-body"><span>10.3% Deposit Bonus</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-bomb text-danger"></span></div>
+                  <div class="unit-body"><span>No Risk Free Trade</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-suitcase text-primary"></span></div>
+                  <div class="unit-body"><span>Senior Brokers</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-thumbs-up text-primary"></span></div>
+                  <div class="unit-body"><span>24/7 Support</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-times text-danger"></span></div>
+                  <div class="unit-body"><span>Instant Widthdrawal</span></div>
+                  </div>
+              </li>
+              </ul>
+          </div>
+          </div>
+      </div>
+      <!-- Pricing Box XL-->
+      <div class="cell-sm-6 cell-lg-3">
+          <div class="pricing-box pricing-box-xl pricing-box-novi">
+          <div class="pricing-box-header">
+              <h4>Gold</h4>
+          </div>
+          <div class="pricing-box-price">
+              <div class="heading-2"><sup>$</sup>1300 +</div>
+            {% if user.is_authenticated %}
+                </div><a class="button button-sm button-primary" href="{% url 'userPanel' %}">Get plan</a>
+            {% else %}
+                </div><a class="button button-sm button-primary" href="{% url 'signup' %}">Get plan</a>
+            {% endif %}
+          <div class="pricing-box-body">
+              <ul class="pricing-box-list">
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-line-chart text-primary"></span></div>
+                  <div class="unit-body"><span>15% Deposit Bonus</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-thumbs-up text-primary"></span></div>
+                  <div class="unit-body"><span>Risk Free Trade</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-suitcase text-primary"></span></div>
+                  <div class="unit-body"><span>Senior Brokers</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-thumbs-up text-primary"></span></div>
+                  <div class="unit-body"><span>24/7 Support</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-thumbs-up text-primary"></span></div>
+                  <div class="unit-body"><span>Instant Widthdrawal</span></div>
+                  </div>
+              </li>
+              </ul>
+          </div>
+          </div>
+      </div>
+      <!-- Pricing Box XL-->
+      <div class="cell-sm-6 cell-lg-3">
+          <div class="pricing-box pricing-box-xl pricing-box-novi">
+          <div class="pricing-box-header">
+              <h4>Platinum</h4>
+          </div>
+          <div class="pricing-box-price"> 
+              <div class="heading-2"><sup>$</sup>1500 +</div>
+            {% if user.is_authenticated %}
+                </div><a class="button button-sm button-primary" href="{% url 'userPanel' %}">Get plan</a>
+            {% else %}
+                </div><a class="button button-sm button-primary" href="{% url 'signup' %}">Get plan</a>
+            {% endif %}
+          <div class="pricing-box-body">
+              <ul class="pricing-box-list">
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-line-chart text-primary"></span></div>
+                  <div class="unit-body"><span>20% Deposit Bonus</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-thumbs-up text-primary"></span></div>
+                  <div class="unit-body"><span>Risk Free Trade</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-suitcase text-primary"></span></div>
+                  <div class="unit-body"><span>Top Senior Brokers</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-thumbs-up text-primary"></span></div>
+                  <div class="unit-body"><span>24/7 Support</span></div>
+                  </div>
+              </li>
+              <li>
+                  <div class="unit unit-spacing-sm unit-horizontal unit-middle">
+                  <div class="unit-left"><span class="fa fa-thumbs-up text-primary"></span></div>
+                  <div class="unit-body"><span>Instant Widthdrawal</span></div>
+                  </div>
+              </li>
+              </ul>
+            </div>
+          </div>
+      </div>
+      </div>
+  </div>
+</section>

@@ -1,0 +1,42 @@
+{% load static %}
+{% load tailwind_filters %}
+
+<!--************Head***********-->
+  {% include 'miniCryptoApp/panel_head.html' %}
+<!--************Head-ends***********-->
+
+<body id="dark">
+  <header class="dark-bb">
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href=" {% url 'index' %} ">
+        swiftxbt™
+      </a>
+    </nav>
+  </header>
+  <div class="vh-100 d-flex justify-content-center " style="background-image: url({% static 'img/initial-bg.png' %})">
+    <div class="my-auto shadow-2xl form-access" style="background-color:#111925">
+      <form method='post' style="border:2px solid green">
+      {% csrf_token %}
+        <span>Create Your Account</span>
+        <div class="text-center text-white form-group">
+          {{ form|crispy }}
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="form-checkbox">
+          <label class="custom-control-label" for="form-checkbox">
+            I agree to the <a href="#!">Terms & Conditions</a>
+          </label>
+        </div>
+        <button type="submit" class="rounded-lg btn btn-primary">Create Account</button>
+        <h2 >Already have an account? <a href="{% url 'login' %} ">Sign in here</a></h2>
+      </form>
+    </div>
+  </div>
+
+  <script src=" {% static 'js/p-js/jquery-3.4.1.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/popper.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/bootstrap.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/amcharts-core.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/amcharts.min.js' %} "></script>
+  <script src=" {% static 'js/p-js/custom.js' %} "></script>
+</body>

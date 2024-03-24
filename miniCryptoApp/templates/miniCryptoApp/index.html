@@ -1,0 +1,124 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head> {% include "miniCryptoApp/head.html" %} </head>
+
+    <script src="//code.tidio.co/kgnojdtq9lsvwocj6nizw5n56fqw5l0q.js" async></script>
+    
+   <!--GetButton.io widget-->
+    <!--<script type="text/javascript">-->
+    <!--(function () {-->
+    <!--var options = {-->
+    <!--whatsapp: "+1 (217) 293-2089", // WhatsApp number-->
+    <!--call_to_action: "Message us", // Call to action-->
+    <!--position: "left", // Position may be 'right' or 'left'-->
+    <!--};-->
+    <!--var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;-->
+    <!--var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';-->
+    <!--s.onload = function () { WhWidgetSendButton.init(host, proto, options); };-->
+    <!--var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);-->
+    <!--})();-->
+    <!--</script>-->
+  <!-- /GetButton.io widget -->
+
+  <body>
+    <!--header area start-->
+        {% include "miniCryptoApp/header.html" %}
+    <!--welcome area end-->
+    
+<!-- ***************marquee begins *********************** -->
+<!-- TradingView Widget BEGIN -->
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
+            async>
+              {
+                "colorTheme": "dark"
+              }
+            </script>
+        </div>
+        <!-- TradingView Widget END -->
+      <!--  <div style="background-color:black ">-->
+      <!--      {% for price in cypto_update %}-->
+      <!--    <marquee behavior="row" direction="left" style='font-size:15px' > -->
+      <!--        <i ><img src="{% static 'img/icons/bitcoin.png' %} " > BTC ~<i class='fa fa-dollar'></i> {{price.bitcoin.usd}} </i> |-->
+      <!--        <i><img src="{% static 'img/icons/ethereum.png' %} " > Ethereum ETH ~<i class='fa fa-dollar'></i>{{price.ethereum.usd}}</i> |-->
+      <!--        <i class='text-success' ><img src="{% static 'img/icons/bitcoin-cash.png' %} " >Bitcoin cash BCH ~<i class='fa fa-dollar'></i>5,233</i> |-->
+      <!--        <i class='text-warning'> <img src="{% static 'img/icons/litecoin.png' %} " >Litecoin LTC ~<i class='fa fa-dollar'></i>{{price.litecoin.usd}}</i> |-->
+      <!--        <i class=' ' ><img src="{% static 'img/icons/stellar.png' %} " >Stellar XLM ~<i class='fa fa-dollar'></i> 0,323</i>|-->
+      <!--        <i class='text-info ' ><img src="{% static 'img/icons/ripple.png' %} " >Ripple XRP ~<i class='fa fa-dollar'></i> 0,442</i>|-->
+      <!--        <i class='text-primary' ><img src="{% static 'img/icons/iota.png' %} " >Iota IOT ~<i class='fa fa-dollar'></i>0.234</i>-->
+      <!--    </marquee>-->
+      <!--    {% endfor %}-->
+      <!--</div>-->
+ <!-- ************************* marquee ends ************************ -->
+
+    <div id="google_translate_element" style=" "></div>
+
+    <!--welcome area start-->
+        {% include "miniCryptoApp/welcomePage.html" %}
+    <!--welcome area end-->
+
+    <!--single about area start-->
+        {% include "miniCryptoApp/singleAbout.html" %}
+    <!--single about area end-->
+
+    <!--ico area start (progress)-->
+        {% include "miniCryptoApp/coinProgress.html" %}
+    <!--ico area end-->
+
+    <!--distibution-bg start-->
+    <div class="distibution-bg">
+        <!---distibution area start-->
+            {% include "miniCryptoApp/features.html" %}
+        <!---distibution area end-->
+    </div>
+    <!--distibution-bg end-->
+
+    <!--roadmap area start-->
+        {% include "miniCryptoApp/tradeProcess.html" %}
+    <!--roadmap area end-->
+
+    <!--team-bg-->
+    <div class="team-bg">
+        <!--History area start-->
+            {% include "miniCryptoApp/history.html" %}
+        <!--History area end-->
+
+        <!--pricing plan area -->
+            {% include "miniCryptoApp/pricing.html" %}
+        <!--pricing plan area end-->
+
+        <!--faq area start-->
+            {% include "miniCryptoApp/FAQ.html" %}
+        <!--faq area end-->
+    </div>
+    <!-- </div> -->
+
+    <!--subFooter area start-->
+        {% include "miniCryptoApp/subFooter.html" %}
+    <!--subFooter area end-->
+
+    <!--footer area start-->
+        {% include "miniCryptoApp/footer.html" %}
+    <!--footer area end-->
+
+    <!-- jquery 2.2.4 js-->
+    <script src="{% static 'js/jquery-2.2.4.min.js' %} "></script>
+    <!-- popper js-->
+    <script src="{% static 'js/popper.js' %} "></script>
+    <!-- carousel js-->
+    <script src="{% static 'js/owl.carousel.min.js' %} "></script>
+    <!-- wow js-->
+    <script src="{% static 'js/wow.min.js' %} "></script>
+    <!-- bootstrap js-->
+    <script src="{% static 'js/bootstrap.min.js' %} "></script>
+    <!--skroller js-->
+    <!--mobile menu js-->
+    <script src="{% static 'js/jquery.slicknav.min.js' %} "></script>
+    <!--particle s-->
+    <script src="{% static 'js/particles.min.js' %} "></script>
+    <!-- main js-->
+    <script src="{% static 'js/main.js' %} "></script>
+  </body>
+</html>
