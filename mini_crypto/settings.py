@@ -26,7 +26,8 @@ SECRET_KEY = 'b=64ta+c31$ou*w8z2&yf7u#1q8$0f^hu!30wou&qe*u$or(m$'
 DEBUG = True
 # DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app']
+# ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
 
 
 # Application definition
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     'phonenumber_field',
     "crispy_forms",
     "crispy_tailwind",
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
@@ -84,20 +87,34 @@ WSGI_APPLICATION = 'mini_crypto.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 
+# DATABASES = {
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME':'coincbfy_swift_db',
+        # 'HOST':'localhost',
+        # 'USER':'coincbfy_anthonix2',
+        # 'PASSWORD':'wemabank1',
+        # 'PORT':'3306',
+        # 'OPTIONS':{
+        #     'init_command':"SET sql_mode = 'STRICT_TRANS_TABLEs'",
+        # },
+    # }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'coincbfy_swift_db',
-        'HOST':'localhost',
-        'USER':'coincbfy_anthonix2',
-        'PASSWORD':'wemabank1',
-        'PORT':'3306',
-        'OPTIONS':{
-            'init_command':"SET sql_mode = 'STRICT_TRANS_TABLEs'",
-        },
+        'ENGINE': "django.db.backends.postgresql",
+        'HOST': "aws-0-eu-west-2.pooler.supabase.com",
+        'NAME': "postgres",
+        'USER': "postgres",
+        'PASSWORD': "Molero1994***",
+        'PORT': "5432",
+
     }
 }
 
+# user=postgres.dsbmnbsbnjyqvyuisrdc password=[YOUR-PASSWORD] host=aws-0-eu-west-2.pooler.supabase.com port=5432 dbname=postgres
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -137,9 +154,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/coincbfy/swift.fxbis.com/static/'
-MEDIA_ROOT = '/home/coincbfy/swift.fxbis.com/media/'
-STATICFILES_DIR = [BASE_DIR +"/assets"]
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'media')
+
+# STATIC_ROOT = '/home/coincbfy/swift.fxbis.com/static/'
+# MEDIA_ROOT = '/home/coincbfy/swift.fxbis.com/media/'
+# STATICFILES_DIR = [BASE_DIR +"/assets"]
 
 
 LOGIN_REDIRECT_URL = 'userPanel'
@@ -155,3 +176,12 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'yesterhoke@gmail.com'
 EMAIL_HOST_PASSWORD = 'hswdudknapumwfod'
 DEFAULT_FROM_EMAIL = 'swiftxbt Team<anthonix1759@gmail.com>'
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME' : os.environ['dtbcdozma'],
+    'API_KEY' : os.environ['899656943288678'],
+    'API_SECRET' : os.environ['TgJOOv4hx_1_q39xfhXFktnINUg']
+}
+
+
